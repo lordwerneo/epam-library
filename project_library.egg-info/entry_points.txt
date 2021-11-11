@@ -1,0 +1,3 @@
+[console_scripts]
+test_folder-cli = test_folder.test:main
+
