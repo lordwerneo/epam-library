@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(
-	name='project-library',
+	name='library-app',
 	version='0.1.0',
 	description='this package contains samples of project-library code',
 	author='Roman Leontovych',
