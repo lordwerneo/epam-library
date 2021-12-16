@@ -1,4 +1,4 @@
-from library_app import app
+from library_app import app, db
 
 
 if __name__ == '__main__':
