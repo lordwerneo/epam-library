@@ -11,3 +11,5 @@ migrate = Migrate(app, db, directory=MIGRATION_DIR)
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
+
+from .models import Genre, Book
