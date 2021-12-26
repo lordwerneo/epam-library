@@ -12,8 +12,15 @@ migrate = Migrate(app, db, directory=MIGRATION_DIR)
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 
+# import views
+from .views import index, genres, books
 
-# import api blueprints
+#register views blueprints
+app.register_blueprint(index, url_prefix='')
+app.register_blueprint(genres, url_prefix='/genres')
+app.register_blueprint(books, url_prefix='/books')
+
+# import api
 from .rest import Index, GenresList, GenresSolo, BooksGenreList, BooksList, \
     BooksSolo
 
