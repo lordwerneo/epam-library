@@ -58,16 +58,3 @@ def get_genre_by_name(name):
         return genre.to_dict()
     return 'Error'
 
-
-def get_genre_total_copies(name):
-    genre = Genre.query.filter_by(name=name)
-    if genre:
-        return sum([book.copies for book in genre.books])
-    return 'Error'
-
-
-def get_genre_unique_books(name):
-    genre = Genre.query.filter_by(name=name)
-    if genre:
-        return len(genre.books)
-    return 'Error'

@@ -50,10 +50,10 @@ class GenresSolo(Resource):
             return {'genre': args, 'link': f'/api/genre/{args["name"]}'}, 200
         elif genre == 'Unknown':
             return {'Message': f'No such genre {name} to update, or '
-                               f'{args["name"]} is busy'}
+                               f'{args["name"]} is busy'}, 404
         elif genre == 'Busy':
             return {'Message': f'Can\'t update genre {name},'
-                               f'genre {args["name"]} already exist'}
+                               f'genre {args["name"]} already exist'}, 400
 
     @staticmethod
     def delete(name):

@@ -1,10 +1,9 @@
 import unittest
 from library_app import app
 from .test_base import Base
-from library_app.models import populate_db
 
 
-class GenresTest(Base):
+class IndexAPITest(Base):
     # test if /api is working
     def test_index(self):
         tester = app.test_client()
@@ -12,7 +11,7 @@ class GenresTest(Base):
         statuscode = response.status_code
         self.assertEqual(statuscode, 200)
 
-    # test if /api return content_type application/json
+    # test if /api return correct content type
     def test_index_content_type(self):
         tester = app.test_client()
         response = tester.get('/api', follow_redirects=True)
@@ -23,7 +22,7 @@ class GenresTest(Base):
     def test_index_data(self):
         tester = app.test_client()
         response = tester.get('/api', follow_redirects=True)
-        self.assertTrue(b'links' in response.data)
+        self.assertTrue(b'resources' in response.data)
 
 
 if __name__ == '__main__':
