@@ -57,4 +57,3 @@ def get_genre_by_name(name):
     if genre:
         return genre.to_dict()
     return 'Error'
-

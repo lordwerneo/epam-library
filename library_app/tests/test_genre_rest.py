@@ -105,8 +105,8 @@ class GenresAPITest(Base):
             'description': 'test description'
         })
         response = tester.put('/api/genre/test', data=payload,
-                               headers={"Content-Type": "application/json"},
-                               follow_redirects=True)
+                              headers={"Content-Type": "application/json"},
+                              follow_redirects=True)
         statuscode = response.status_code
         data = response.data
         self.assertEqual(statuscode, 201)
@@ -119,8 +119,8 @@ class GenresAPITest(Base):
             'description': 'test description'
         })
         response = tester.put('/api/genre/test', data=payload,
-                               headers={"Content-Type": "application/json"},
-                               follow_redirects=True)
+                              headers={"Content-Type": "application/json"},
+                              follow_redirects=True)
         statuscode = response.status_code
         self.assertEqual(statuscode, 400)
 
