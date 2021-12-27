@@ -1,25 +1,20 @@
-#!/usr/bin/env python
 import unittest
+from .test_base import Base
 from library_app import app, db
 from library_app.models import Genre, Book
+from library_app.models import populate_db
 
 
-class GenreModelCase(unittest.TestCase):
-    def setUp(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
-        db.create_all()
-
-    def tearDown(self):
-        db.session.remove()
-        db.drop_all()
-
+class GenreModelCase(Base):
     def test_add_genre_to_db(self):
+        populate_db.populate_genre()
+        populate_db.populate_book()
         genre = Genre.query.filter_by(name='test').first()
         self.assertIsNone(genre)
         genre = Genre(name='test', description='test description')
         db.session.add(genre)
         db.session.commit()
-        genre = Genre.query.get(1)
+        genre = Genre.query.filter_by(name='test').first()
         self.assertEqual(genre.name, 'test')
         self.assertEqual(genre.description, 'test description')
         self.assertEqual(genre.books, [])
@@ -28,12 +23,14 @@ class GenreModelCase(unittest.TestCase):
         self.assertNotEqual(genre.books, [1, 2])
 
     def test_to_dict(self):
+        populate_db.populate_genre()
+        populate_db.populate_book()
         genre = Genre(name='test', description='test description')
         db.session.add(genre)
         db.session.commit()
         book = Book(isbn='1-23-456789-X', title='test', author='test author',
                     year=2021, publisher='test publisher', copies=5,
-                    genre_id=Genre.query.get(1).id).to_dict()
+                    genre_id=Genre.query.filter_by(name='test').first().id).to_dict()
         self.assertEqual(book['isbn'], '1-23-456789-X')
         self.assertEqual(book['title'], 'test')
         self.assertEqual(book['author'], 'test author')
@@ -43,6 +40,8 @@ class GenreModelCase(unittest.TestCase):
         self.assertEqual(book['genre'], 'test')
 
     def test_add_book_to_db(self):
+        populate_db.populate_genre()
+        populate_db.populate_book()
         genre = Genre(name='test', description='test description')
         db.session.add(genre)
         db.session.commit()
@@ -52,8 +51,8 @@ class GenreModelCase(unittest.TestCase):
             Book(isbn='1-23-456789-X', title='test',
                  author='test author', year=2021,
                  publisher='test publisher', copies=5,
-                 genre_id=Genre.query.get(2).id)
-        genre = Genre.query.get(1)
+                 genre_id=Genre.query.get(4).id)
+        genre = Genre.query.get(3)
         print(genre)
         book = Book(isbn='1-23-456789-X', title='test',
                     author='test author', year=2021,
@@ -68,14 +67,25 @@ class GenreModelCase(unittest.TestCase):
         self.assertEqual(book.year, 2021)
         self.assertEqual(book.publisher, 'test publisher')
         self.assertEqual(book.copies, 5)
-        self.assertEqual(book.genre_id, 1)
+        self.assertEqual(book.genre_id, 3)
         self.assertNotEqual(book.isbn, '2-23-456789-X')
         self.assertNotEqual(book.title, 'testing')
         self.assertNotEqual(book.author, 'test author test')
         self.assertNotEqual(book.year, 2022)
         self.assertNotEqual(book.publisher, 'test publisher test')
         self.assertNotEqual(book.copies, 1)
-        self.assertNotEqual(book.genre_id, 2)
+        self.assertNotEqual(book.genre_id, 4)
+
+    def test_book_repr(self):
+        populate_db.populate_genre()
+        populate_db.populate_book()
+        book = Book(isbn='1-23-456789-X', title='test', author='test',
+                    year=2021, publisher='test', copies=1,
+                    genre_id=Genre.query.filter_by(name='fantasy').first().id)
+        expected_repr = 'Book(1-23-456789-X, test, test, 2021, test, 1, 1)'
+        not_expected_repr = 'Book(1-23-456789-1, test, test, 2021, test, 1, 1)'
+        self.assertEqual(str(book), expected_repr)
+        self.assertNotEqual(str(book), not_expected_repr)
 
 
 if __name__ == '__main__':

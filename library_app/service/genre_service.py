@@ -43,6 +43,7 @@ def put_genre(current_name, name, description):
             return 'Updated'
         return 'Busy'
 
+
 def delete_genre(name):
     genre = Genre.query.filter_by(name=name).first()
     if not genre:

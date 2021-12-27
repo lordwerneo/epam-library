@@ -2,6 +2,8 @@ from flask_restful import Resource
 
 
 class Index(Resource):
+    # noinspection PyMethodMayBeStatic
+    # pylint: disable=no-self-use
     def get(self):
         return {'links': {
             'main': {'main': 'http://localhost:5000/api'},

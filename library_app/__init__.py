@@ -15,7 +15,7 @@ api = Api(api_bp)
 # import views
 from .views import index, genres, books
 
-#register views blueprints
+# register views blueprints
 app.register_blueprint(index, url_prefix='')
 app.register_blueprint(genres, url_prefix='/genres')
 app.register_blueprint(books, url_prefix='/books')

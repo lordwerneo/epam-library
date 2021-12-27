@@ -14,7 +14,8 @@ class Book(db.Model):
 
     def __repr__(self):
         return f'Book({self.isbn}, {self.title}, {self.author}, ' \
-               f'{self.year}, {self.publisher}, {self.copies})'
+               f'{self.year}, {self.publisher}, {self.copies}, ' \
+               f'{self.genre_id})'
 
     def to_dict(self):
         """

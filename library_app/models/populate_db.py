@@ -41,7 +41,7 @@ def populate_genre():
         db.session.commit()
 
 
-def pupulate_book():
+def populate_book():
     book_list = [['0-7475-3269-9', 'Harry Potter and the Philosopher\'s Stone',
                   'J. K. Rowling', 1997, 'Bloomsbury', 3, 1],
                  ['0-7475-3849-2', 'Harry Potter and the Chamber of Secrets',
@@ -110,6 +110,6 @@ def pupulate_book():
         db.session.add(book_to_input)
         db.session.commit()
 
-
-populate_genre()
-pupulate_book()
+if __name__ == '__main__':
+    populate_genre()
+    populate_book()

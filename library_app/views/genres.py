@@ -19,12 +19,12 @@ def genres_page():
 def add_genre():
     form = AddGenreForm()
     if form.validate_on_submit():
-        genre = genre_service.post_genre(
+        genre_service.post_genre(
             name=form.name.data.lower(),
             description=form.description.data)
-        if genre == 'Error':
-            flash(f'Genre "{form.name.data}" already exists.', 'fail')
-            return redirect(url_for('genres.genres_page'))
+        # if genre == 'Error':
+        #     flash(f'Genre "{form.name.data}" already exists.', 'fail')
+        #     return redirect(url_for('genres.genres_page'))
         flash(f'Genre "{form.name.data}" successfully added.', 'success')
         return redirect(url_for('genres.genres_page'))
     title = 'Add Genre'
@@ -46,8 +46,8 @@ def update_genre(genre_name):
         if genre == 'Updated':
             flash(f'Genre "{form.name.data}" successfully updated.', 'success')
             return redirect(url_for('genres.genres_page'))
-        elif genre == 'Busy':
-            flash(f'GEnre "{form.name.data}" in use.', 'fail')
+        # elif genre == 'Busy':
+        #     flash(f'GEnre "{form.name.data}" in use.', 'fail')
     title = 'Update Genre'
     return render_template('update_genre.html', title=title, form=form)
 

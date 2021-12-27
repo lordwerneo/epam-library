@@ -9,7 +9,7 @@ class Genre(db.Model):
                             backref='genre', lazy=True)
 
     def __repr__(self):
-        return f'Genre({self.name}, {self.description}).'
+        return f'Genre({self.name}, {self.description}, {self.books})'
 
     def to_dict(self):
         """

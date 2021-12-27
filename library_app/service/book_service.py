@@ -132,4 +132,3 @@ def get_book_by_isbn(isbn):
     if book:
         return book.to_dict()
     return 'Error'
-
