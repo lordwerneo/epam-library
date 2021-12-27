@@ -5,7 +5,6 @@ from library_app.models import populate_db
 
 
 class GenresTest(Base):
-    # Check for 200 response of genres page
     def test_genres(self):
         tester = app.test_client()
         response = tester.get('/genres/', content_type='html/text')

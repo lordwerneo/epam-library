@@ -40,9 +40,9 @@ def add_book():
                        author=form.author.data, year=form.year.data,
                        publisher=form.publisher.data, copies=form.copies.data,
                        genre=Genre.query.get(form.genre.data).name)
-        if book == 'ISBN exists':
-            flash(f'ISBN "{form.isbn.data}" already in DB.', 'fail')
-            return redirect(url_for('books.books_page'))
+        # if book == 'ISBN exists':
+        #     flash(f'ISBN "{form.isbn.data}" already in DB.', 'fail')
+        #     return redirect(url_for('books.books_page'))
         flash(f'Book "{form.title.data}" successfully added.', 'success')
         return redirect(url_for('books.books_page'))
     title = 'Add Book'

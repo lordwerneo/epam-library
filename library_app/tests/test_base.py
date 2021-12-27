@@ -9,8 +9,7 @@ class Base(unittest.TestCase):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
         db.create_all()
         app.config.from_object(TestConfig)
-        # populate_db.populate_genre()
-        # populate_db.populate_book()
+
 
     def tearDown(self):
         db.session.remove()
