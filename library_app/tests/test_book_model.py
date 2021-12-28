@@ -1,12 +1,21 @@
+"""
+This module defines test cases for book model
+"""
 import unittest
 from .test_base import Base
-from library_app import app, db
+from library_app import db
 from library_app.models import Genre, Book
 from library_app.models import populate_db
 
 
-class GenreModelCase(Base):
+class BookModelCase(Base):
+    """
+    Class for book and genre model test cases
+    """
     def test_add_genre_to_db(self):
+        """
+        Test insertion into genre table in DB
+        """
         populate_db.populate_genre()
         populate_db.populate_book()
         genre = Genre.query.filter_by(name='test').first()
@@ -23,6 +32,9 @@ class GenreModelCase(Base):
         self.assertNotEqual(genre.books, [1, 2])
 
     def test_to_dict(self):
+        """
+        Test dictionary serialization of book
+        """
         populate_db.populate_genre()
         populate_db.populate_book()
         genre = Genre(name='test', description='test description')
@@ -30,7 +42,8 @@ class GenreModelCase(Base):
         db.session.commit()
         book = Book(isbn='1-23-456789-X', title='test', author='test author',
                     year=2021, publisher='test publisher', copies=5,
-                    genre_id=Genre.query.filter_by(name='test').first().id).to_dict()
+                    genre_id=Genre.query.filter_by(name='test').first().id)\
+            .to_dict()
         self.assertEqual(book['isbn'], '1-23-456789-X')
         self.assertEqual(book['title'], 'test')
         self.assertEqual(book['author'], 'test author')
@@ -40,6 +53,9 @@ class GenreModelCase(Base):
         self.assertEqual(book['genre'], 'test')
 
     def test_add_book_to_db(self):
+        """
+        Test insertion into book table in DB
+        """
         populate_db.populate_genre()
         populate_db.populate_book()
         genre = Genre(name='test', description='test description')
@@ -77,6 +93,9 @@ class GenreModelCase(Base):
         self.assertNotEqual(book.genre_id, 4)
 
     def test_book_repr(self):
+        """
+        Test book __repr__ method
+        """
         populate_db.populate_genre()
         populate_db.populate_book()
         book = Book(isbn='1-23-456789-X', title='test', author='test',

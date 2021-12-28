@@ -1,3 +1,6 @@
+"""
+This module defines test cases for genre rest API
+"""
 import unittest
 from library_app import app
 from .test_base import Base
@@ -6,45 +9,60 @@ import json
 
 
 class GenresAPITest(Base):
-    # test if /api/genres is working
+    """
+    Class for genre rest API test cases
+    """
     def test_get_genres(self):
+        """
+        Test if /api/genres is working
+        """
         tester = app.test_client()
         response = tester.get('/api/genres', follow_redirects=True)
         statuscode = response.status_code
         self.assertEqual(statuscode, 200)
 
-    # test if api/genres return correct content type
     def test_get_genres_content_type(self):
+        """
+        Test if api/genres return correct content type
+        """
         tester = app.test_client()
         response = tester.get('/api/genres', follow_redirects=True)
         content_type = response.content_type
         self.assertEqual(content_type, "application/json")
 
-    # test for correct content in response
     def test_get_genres_data(self):
+        """
+        Test for correct content in response
+        """
         populate_db.populate_genre()
         tester = app.test_client()
         response = tester.get('/api/genres', follow_redirects=True)
         self.assertTrue(Genre.query.get(1).name.encode() in response.data)
 
-    # test if api/genre/fantasy is working
     def test_get_genre(self):
+        """
+        Test if api/genre/fantasy is working
+        """
         populate_db.populate_genre()
         tester = app.test_client()
         response = tester.get('/api/genre/fantasy', follow_redirects=True)
         statuscode = response.status_code
         self.assertEqual(statuscode, 200)
 
-    # test if api/genres return correct content type
     def test_get_genre_content_type(self):
+        """
+        Test if api/genres return correct content type
+        """
         populate_db.populate_genre()
         tester = app.test_client()
         response = tester.get('/api/genre/fantasy', follow_redirects=True)
         content_type = response.content_type
         self.assertEqual(content_type, "application/json")
 
-    # test for correct content in response
     def test_get_genre_data(self):
+        """
+        Test for correct content in response
+        """
         # test for response if no entry in DB
         tester = app.test_client()
         response = tester.get('/api/genre/test', follow_redirects=True)
@@ -56,8 +74,10 @@ class GenresAPITest(Base):
         response = tester.get('/api/genre/fantasy', follow_redirects=True)
         self.assertTrue(Genre.query.get(1).name.encode() in response.data)
 
-    # test post method for genres
     def test_post_genres(self):
+        """
+        Test post method for genres
+        """
         # test with correct input
         tester = app.test_client()
         payload = json.dumps({
@@ -96,8 +116,10 @@ class GenresAPITest(Base):
         statuscode = response.status_code
         self.assertEqual(statuscode, 405)
 
-    # test put method for genres
     def test_put_genre(self):
+        """
+        Test put method for genres
+        """
         # test with correct input
         tester = app.test_client()
         payload = json.dumps({
@@ -161,8 +183,10 @@ class GenresAPITest(Base):
         statuscode = response.status_code
         self.assertEqual(statuscode, 400)
 
-    # test delete method for genre
     def test_delete_genre(self):
+        """
+        Test delete method for genre
+        """
         tester = app.test_client()
         response = tester.delete('/api/genre/fantasy', follow_redirects=True)
         statuscode = response.status_code

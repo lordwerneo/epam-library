@@ -1,3 +1,6 @@
+"""
+This module defines test cases for book views
+"""
 import unittest
 from library_app import app
 from .test_base import Base
@@ -5,7 +8,13 @@ from library_app.models import populate_db
 
 
 class BookTest(Base):
+    """
+    Class for book views test cases
+    """
     def test_books(self):
+        """
+        Test /books view with and without filter
+        """
         # test view without filter
         populate_db.populate_genre()
         populate_db.populate_book()
@@ -24,6 +33,9 @@ class BookTest(Base):
         self.assertEqual(statuscode, 200)
 
     def test_add_book(self):
+        """
+        Test /books/add_book views with get and post methods.
+        """
         # test add book view with get method
         tester = app.test_client()
         response = tester.get('/books/add_book')
@@ -46,6 +58,10 @@ class BookTest(Base):
         self.assertEqual(statuscode, 200)
 
     def test_update_book(self):
+        """
+        Test /books/update_book/<string:book_isbn> views with get and post
+        methods, providing correct and incorrect information.
+        """
         populate_db.populate_genre()
         populate_db.populate_book()
         # test update book providing wrong isbn with get method
@@ -76,6 +92,9 @@ class BookTest(Base):
         self.assertEqual(statuscode, 200)
 
     def test_delete_book(self):
+        """
+        Test /books/delete_book/<string:book_isbn> views with get method.
+        """
         populate_db.populate_genre()
         populate_db.populate_book()
         # test delete book with correct isbn

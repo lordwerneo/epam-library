@@ -1,3 +1,6 @@
+"""
+This module defines test cases for book rest API
+"""
 import unittest
 from library_app import app
 from .test_base import Base
@@ -6,30 +9,41 @@ import json
 
 
 class BooksAPItest(Base):
-    # test if /api/books is working with empty db
+    """
+    Class for book rest API test cases
+    """
     def test_get_books(self):
+        """
+        Test if /api/books is working with empty db
+        """
         tester = app.test_client()
         response = tester.get('/api/books', follow_redirects=True)
         statuscode = response.status_code
         self.assertEqual(statuscode, 200)
 
-    # test if /api/books return correct content type
     def test_get_books_content_type(self):
+        """
+        Test if /api/books return correct content type
+        """
         tester = app.test_client()
         response = tester.get('/api/books', follow_redirects=True)
         content_type = response.content_type
         self.assertEqual(content_type, "application/json")
 
-    # test for correct content in response
     def test_get_books_data(self):
+        """
+        Test for correct content in response
+        """
         populate_db.populate_genre()
         populate_db.populate_book()
         tester = app.test_client()
         response = tester.get('/api/books', follow_redirects=True)
         self.assertTrue(Book.query.get(1).isbn.encode() in response.data)
 
-    # test if api/book/0-7475-3269-9 is working
     def test_get_book(self):
+        """
+        Test if api/book/0-7475-3269-9 is working
+        """
         populate_db.populate_genre()
         populate_db.populate_book()
         tester = app.test_client()
@@ -37,15 +51,19 @@ class BooksAPItest(Base):
         statuscode = response.status_code
         self.assertEqual(statuscode, 200)
 
-    # test if api/book/0-7475-3269-9 return correct content type
     def test_get_genre_content_type(self):
+        """
+        Test if api/book/0-7475-3269-9 return correct content type
+        """
         tester = app.test_client()
         response = tester.get('api/book/0-7475-3269-9', follow_redirects=True)
         content_type = response.content_type
         self.assertEqual(content_type, "application/json")
 
-    # test for correct response for api/book/0-7475-3269-9
     def test_get_book_data(self):
+        """
+        Test for correct response for api/book/0-7475-3269-9
+        """
         # test for response if no entry in DB
         tester = app.test_client()
         response = tester.get('api/book/0-7475-3269-9', follow_redirects=True)
@@ -57,8 +75,10 @@ class BooksAPItest(Base):
         response = tester.get('api/book/0-7475-3269-9', follow_redirects=True)
         self.assertTrue(Book.query.get(1).isbn.encode() in response.data)
 
-    # test for correct response for books sorted by genre
     def test_get_books_by_genre(self):
+        """
+        Test for correct response for books sorted by genre
+        """
         # if genre doesn't exist
         tester = app.test_client()
         response = tester.get('api/books/fantasy', follow_redirects=True)
@@ -74,8 +94,10 @@ class BooksAPItest(Base):
         response = tester.get('api/books/fantasy', follow_redirects=True)
         self.assertTrue(Book.query.get(1).isbn.encode() in response.data)
 
-    # test post method for books
     def test_post_books(self):
+        """
+        Test post method for books
+        """
         # test data validator with incorrect data
         tester = app.test_client()
         payload = json.dumps({"isbn": "1-23-456789-X",
@@ -130,8 +152,10 @@ class BooksAPItest(Base):
                                follow_redirects=True)
         self.assertTrue(b'Book 1-23-456789-X already exists' in response.data)
 
-    # test put method for book with
     def test_put_book(self):
+        """
+        Test put method for book
+        """
         # test data validator with incorrect data
         tester = app.test_client()
         payload = json.dumps({"isbn": "1-23-456789-X",
@@ -202,12 +226,16 @@ class BooksAPItest(Base):
         self.assertTrue(b'Book 1-23-456789-X updated' in response.data)
 
     def test_delete_book(self):
+        """Test delete method for book with"""
+        # test deletion of not existing entry
         populate_db.populate_genre()
         tester = app.test_client()
         response = tester.delete('api/book/0-7475-3269-9',
                                  headers={'Content-type': 'application/json'},
                                  follow_redirects=True)
         self.assertTrue(b'No such book' in response.data)
+
+        # test deletion of existing entry
         populate_db.populate_book()
         response = tester.delete('api/book/0-7475-3269-9',
                                  headers={'Content-type': 'application/json'},

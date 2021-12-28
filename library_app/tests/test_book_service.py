@@ -1,10 +1,20 @@
+"""
+This module defines test case for book service
+"""
 import unittest
 from library_app.service.book_service import isbn_checker
 
 
 class TestBookService(unittest.TestCase):
-
+    """
+    Class for book service test
+    """
     def test_isbn_checker(self):
+        """
+        Testing isbn_checker function.
+        It should return results from isbn_cases[1], based in isbn_cases[0]
+        input.
+        """
         isbn_cases = [
             ['978-1-60309-025-4', None],
             ['0-7475-3269-9', None],
