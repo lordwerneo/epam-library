@@ -5,8 +5,9 @@ Define all the needed variables for the application.
 Register all API resources.
 Register all the blueprints.
 """
-# pylint: disable=cyclic-impor
+# pylint: disable=cyclic-import
 import logging
+import sys
 from logging.handlers import RotatingFileHandler
 from flask import Flask, Blueprint
 from flask_sqlalchemy import SQLAlchemy
@@ -24,17 +25,30 @@ api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 
 # file handler for Logging
-if not app.debug:
-    file_handler = RotatingFileHandler('logs.txt', maxBytes=102400,
-                                       backupCount=100)
-    file_handler.setFormatter(logging.Formatter(
-        '%(asctime)s %(levelname)s: %(message)s '
-        '[in %(pathname)s:%(lineno)d]'))
-    file_handler.setLevel(logging.DEBUG)
-    app.logger.addHandler(file_handler)
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
+log_path = 'library.log'
+file_handler = RotatingFileHandler(log_path, maxBytes=102400,
+                                   backupCount=10)
+file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.DEBUG)
 
-    app.logger.setLevel(logging.DEBUG)
-    app.logger.info('App startup')
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(formatter)
+console_handler.setLevel(logging.DEBUG)
+
+werkzeug_logger = logging.getLogger('werkzeug')
+werkzeug_logger.handlers.clear()
+werkzeug_logger.addHandler(file_handler)
+werkzeug_logger.addHandler(console_handler)
+werkzeug_logger.setLevel(logging.DEBUG)
+
+logger = app.logger
+logger.handlers.clear()
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+logger.setLevel(logging.DEBUG)
+logger.info('Library app starting')
+
 
 # import views
 # pylint: disable=cyclic-import
