@@ -1,3 +1,6 @@
+"""
+This module represents the logic on /books route.
+"""
 from flask import Blueprint, render_template, url_for, flash, redirect
 from library_app.forms import AddBookForm, UpdateBookForm, FilterBookForm
 from library_app.service import book_service
@@ -8,6 +11,12 @@ books = Blueprint('books', __name__)
 
 @books.route('/', methods=['POST', 'GET'])
 def books_page():
+    """
+    Renders the books.html on /books route.
+    Show all books.
+    Show form to filter books by year published and genre.
+    Show filtered books.
+    """
     form = FilterBookForm()
     choices = [(int(genre.id), genre.name.title())
                for genre in Genre.query.all()]
@@ -30,6 +39,11 @@ def books_page():
 
 @books.route('/add_book', methods=['POST', 'GET'])
 def add_book():
+    """
+    Renders the add_book.html on /books/add_book route.
+    Show form to add book.
+    Redirects to /books
+    """
     form = AddBookForm()
     choices = [(int(genre.id), genre.name.title())
                for genre in Genre.query.all()]
@@ -40,9 +54,6 @@ def add_book():
                        author=form.author.data, year=form.year.data,
                        publisher=form.publisher.data, copies=form.copies.data,
                        genre=Genre.query.get(form.genre.data).name)
-        # if book == 'ISBN exists':
-        #     flash(f'ISBN "{form.isbn.data}" already in DB.', 'fail')
-        #     return redirect(url_for('books.books_page'))
         flash(f'Book "{form.title.data}" successfully added.', 'success')
         return redirect(url_for('books.books_page'))
     title = 'Add Book'
@@ -51,6 +62,12 @@ def add_book():
 
 @books.route('/update_book/<string:isbn>', methods=['POST', 'GET'])
 def update_book(isbn):
+    """
+    Renders the update_book.html on /books/update_book/<string:isbn> route.
+    Show form to update books.
+    Redirects go /books
+    :param isbn: ISBN of the book to update.
+    """
     book_to_update = book_service.get_book_by_isbn(isbn)
     if book_to_update == 'Error':
         flash(f'Book with "{isbn}" ISBN doesn\'t exist.', 'fail')
@@ -79,6 +96,11 @@ def update_book(isbn):
 
 @books.route('/delete_book/<string:isbn>')
 def delete_book(isbn):
+    """
+    Delete book on /books/update_book/<string:isbn> route.
+    Redirects to /books
+    :param isbn: ISBN of the book to delete.
+    """
     book_to_delete = book_service.delete_book(isbn)
     if book_to_delete == 'Error':
         flash(f'Book with "{isbn}" ISBN doesn\'t exist.', 'fail')
