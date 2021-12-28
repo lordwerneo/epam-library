@@ -1,6 +1,7 @@
 """
 This module defines test cases for genre rest API
 """
+# pylint: disable=cyclic-import
 import unittest
 import json
 from library_app import app

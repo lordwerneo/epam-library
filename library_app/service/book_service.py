@@ -1,11 +1,14 @@
 """
 This module contains CRUD operations to work with 'books' table.
 """
+# pylint: disable=cyclic-import
 import re
 from library_app import db
 from ..models import Genre, Book
 
 
+# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-branches
 def isbn_checker(isbn):
     """
     Check ISBN for invalid characters, length, format and checksum.
@@ -52,6 +55,7 @@ def isbn_checker(isbn):
     return None
 
 
+# pylint: disable=no-member
 def get_all_books():
     """
     Select all records from books table.
@@ -63,6 +67,7 @@ def get_all_books():
     return 'Error'
 
 
+# pylint: disable=no-member
 def get_genre_books(genre):
     """
     Select all books of genre from books table.
@@ -78,6 +83,7 @@ def get_genre_books(genre):
     return 'Error'
 
 
+# pylint: disable=no-member
 def get_filtered_books(year_start, year_end, genre):
     """
     Select all books from books table filtered by year from, year to, and
@@ -98,6 +104,9 @@ def get_filtered_books(year_start, year_end, genre):
     return books
 
 
+# pylint: disable=no-member
+# pylint: disable=inconsistent-return-statements
+# pylint: disable=too-many-arguments
 def post_book(isbn, title, author, year, publisher, copies, genre):
     """
     Add new book to table
@@ -124,6 +133,9 @@ def post_book(isbn, title, author, year, publisher, copies, genre):
     return 'No genre'
 
 
+# pylint: disable=no-member
+# pylint: disable=inconsistent-return-statements
+# pylint: disable=too-many-arguments
 def put_book(cur_isbn, isbn, title, author, year, publisher, copies, genre):
     """
     Update an existing book or create a new one.
@@ -161,6 +173,8 @@ def put_book(cur_isbn, isbn, title, author, year, publisher, copies, genre):
     return 'No genre'
 
 
+# pylint: disable=no-member
+# pylint: disable=inconsistent-return-statements
 def delete_book(isbn):
     """
     Delete an existing book.
@@ -173,6 +187,7 @@ def delete_book(isbn):
     db.session.commit()
 
 
+# pylint: disable=no-member
 def get_book_by_isbn(isbn):
     """
     Return information about a book, isbn of the books provided in request.

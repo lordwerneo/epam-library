@@ -1,6 +1,7 @@
 """
 This module defines test cases for index view
 """
+# pylint: disable=cyclic-import
 import unittest
 from library_app import app
 

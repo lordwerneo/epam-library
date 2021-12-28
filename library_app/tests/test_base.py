@@ -1,6 +1,7 @@
 """
 This module defines the Base test class
 """
+# pylint: disable=cyclic-import
 import unittest
 from config import TestConfig
 from library_app import app, db

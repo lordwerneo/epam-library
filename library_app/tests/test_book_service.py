@@ -1,6 +1,7 @@
 """
 This module defines test case for book service
 """
+# pylint: disable=cyclic-import
 import unittest
 from library_app.service.book_service import isbn_checker
 

@@ -1,10 +1,12 @@
 """
 This module contains CRUD operations to work with 'genres' table.
 """
+# pylint: disable=cyclic-import
 from library_app import db
 from ..models import Genre
 
 
+# pylint: disable=no-member
 def get_all_genres():
     """
     Select all records from genres table.
@@ -16,6 +18,8 @@ def get_all_genres():
     return 'Error'
 
 
+# pylint: disable=no-member
+# pylint: disable=inconsistent-return-statements
 def post_genre(name, description):
     """
     Add new genre to table.
@@ -31,6 +35,7 @@ def post_genre(name, description):
     return 'Error'
 
 
+# pylint: disable=no-member
 def put_genre(current_name, name, description):
     """
     Update an existing genre or create a new one.
@@ -44,23 +49,23 @@ def put_genre(current_name, name, description):
             db.session.add(genre)
             db.session.commit()
             return 'Created'
-        else:
-            genre = Genre.query.filter_by(name=current_name).first()
-            genre.description = description
-            db.session.commit()
-            return 'Updated'
-    else:
-        if not Genre.query.filter_by(name=current_name).first():
-            return 'Unknown'
-        elif not Genre.query.filter_by(name=name).first():
-            genre = Genre.query.filter_by(name=current_name).first()
-            genre.name = name
-            genre.description = description
-            db.session.commit()
-            return 'Updated'
-        return 'Busy'
+        genre = Genre.query.filter_by(name=current_name).first()
+        genre.description = description
+        db.session.commit()
+        return 'Updated'
+    if not Genre.query.filter_by(name=current_name).first():
+        return 'Unknown'
+    if not Genre.query.filter_by(name=name).first():
+        genre = Genre.query.filter_by(name=current_name).first()
+        genre.name = name
+        genre.description = description
+        db.session.commit()
+        return 'Updated'
+    return 'Busy'
 
 
+# pylint: disable=no-member
+# pylint: disable=inconsistent-return-statements
 def delete_genre(name):
     """
     Delete an existing genre
@@ -73,6 +78,7 @@ def delete_genre(name):
     db.session.commit()
 
 
+# pylint: disable=no-member
 def get_genre_by_name(name):
     """
     Return information about genre, name of the genre provided in request.

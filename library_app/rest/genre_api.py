@@ -1,6 +1,7 @@
 """
 This module contains REST operations to work with genres.
 """
+# pylint: disable=cyclic-import
 from flask_restful import Resource, reqparse
 from library_app.service import genre_service
 
@@ -60,6 +61,7 @@ class GenresSolo(Resource):
             return {'Message': 'No such genre'}, 404
         return {'genre': genre}, 200
 
+    # pylint: disable=inconsistent-return-statements
     @staticmethod
     def put(name):
         """
@@ -71,18 +73,18 @@ class GenresSolo(Resource):
         """
         args = genre_args.parse_args()
         if args['name'] == '' or args['description'] == '':
-            return{'Message': 'Wrong data input'}, 400
+            return {'Message': 'Wrong data input'}, 400
         genre = genre_service.put_genre(current_name=name,
                                         name=args['name'],
                                         description=args['description'])
         if genre == 'Created':
             return {'genre': args, 'link': f'/api/genre/{args["name"]}'}, 201
-        elif genre == 'Updated':
+        if genre == 'Updated':
             return {'genre': args, 'link': f'/api/genre/{args["name"]}'}, 200
-        elif genre == 'Unknown':
+        if genre == 'Unknown':
             return {'Message': f'No such genre {name} to update, or '
                                f'{args["name"]} is busy'}, 404
-        elif genre == 'Busy':
+        if genre == 'Busy':
             return {'Message': f'Can\'t update genre {name},'
                                f'genre {args["name"]} already exist'}, 400
 

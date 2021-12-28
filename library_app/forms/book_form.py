@@ -1,3 +1,7 @@
+"""
+This module contains web form classes to add and update book
+"""
+# pylint: disable=cyclic-import
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Length, ValidationError, \
@@ -7,6 +11,9 @@ from library_app.service.book_service import isbn_checker
 
 
 class AddBookForm(FlaskForm):
+    """
+    Form to add book to table
+    """
     isbn = StringField('ISBN',
                        validators=[DataRequired(), Length(min=10, max=20)])
     title = StringField('Title',
@@ -32,6 +39,12 @@ class AddBookForm(FlaskForm):
     # noinspection PyMethodMayBeStatic
     # pylint: disable=no-self-use
     def validate_isbn(self, isbn):
+        """
+        ISBN validation function
+        :param isbn: isbn of book
+        :return: raise ValidationError if ISBN contains invalid information or
+        already in table
+        """
         isbn_db = Book.query.filter_by(isbn=isbn.data).first()
         if isbn_db:
             raise ValidationError(f'ISBN {isbn.data} already exists.')
@@ -41,6 +54,7 @@ class AddBookForm(FlaskForm):
 
 
 class UpdateBookForm(FlaskForm):
+    """Form to update book"""
     title = StringField('Title',
                         validators=[DataRequired(), Length(min=1, max=64)])
     author = StringField('Author',
@@ -63,6 +77,9 @@ class UpdateBookForm(FlaskForm):
 
 
 class FilterBookForm(FlaskForm):
+    """
+    Form to filter book information for books.html
+    """
     message = 'Year should be from 1900 to 2022'
     year_start = IntegerField('From', default=1900,
                               validators=[NumberRange(min=1900, max=2022,

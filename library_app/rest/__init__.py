@@ -2,6 +2,7 @@
 __init__.py file of rest module with imported index_api, genre_api and
 book_api submodules.
 """
+# pylint: disable=cyclic-import
 from . import index_api
 from . import genre_api
 from . import book_api

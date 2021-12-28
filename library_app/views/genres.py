@@ -1,6 +1,7 @@
 """
 This module represents the logic on /genres route.
 """
+# pylint: disable=cyclic-import
 from flask import Blueprint, render_template, url_for, flash, redirect
 from library_app.forms import AddGenreForm, UpdateGenreForm
 from library_app.service import genre_service

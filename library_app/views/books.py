@@ -1,6 +1,7 @@
 """
 This module represents the logic on /books route.
 """
+# pylint: disable=cyclic-import
 from flask import Blueprint, render_template, url_for, flash, redirect
 from library_app.forms import AddBookForm, UpdateBookForm, FilterBookForm
 from library_app.service import book_service

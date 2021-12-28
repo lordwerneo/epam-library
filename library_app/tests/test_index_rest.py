@@ -1,6 +1,7 @@
 """
 This module defines test cases for index rest API
 """
+# pylint: disable=cyclic-import
 import unittest
 from library_app import app
 from .test_base import Base

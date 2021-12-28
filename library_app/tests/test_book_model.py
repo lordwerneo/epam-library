@@ -1,12 +1,14 @@
 """
 This module defines test cases for book model
 """
+# pylint: disable=cyclic-import
 import unittest
 from library_app import db
 from library_app.models import Genre, Book, populate_db
 from .test_base import Base
 
 
+# pylint: disable=no-member
 class BookModelCase(Base):
     """
     Class for book and genre model test cases

@@ -1,8 +1,15 @@
+"""
+This module contains methods to populate books and genres tables for tests
+"""
+# pylint: disable=cyclic-import
 from library_app import db
 from library_app.models import Book, Genre
 
 
 def populate_genre():
+    """
+    Populate genre table with genres
+    """
     genre_list = [['fantasy', 'Fantasy is a genre of speculative fiction '
                               'involving magical elements, typically set in '
                               'a fictional universe and sometimes inspired '
@@ -37,11 +44,15 @@ def populate_genre():
 
     for genre in genre_list[:2]:
         genre_to_input = Genre(name=genre[0], description=genre[1])
+        # pylint: disable=no-member
         db.session.add(genre_to_input)
         db.session.commit()
 
 
 def populate_book():
+    """
+    Populate book table with books.
+    """
     book_list = [['0-7475-3269-9', 'Harry Potter and the Philosopher\'s Stone',
                   'J. K. Rowling', 1997, 'Bloomsbury', 3, 1],
                  ['0-7475-3849-2', 'Harry Potter and the Chamber of Secrets',
@@ -107,8 +118,10 @@ def populate_book():
         book_to_input = Book(isbn=book[0], title=book[1], author=book[2],
                              year=book[3], publisher=book[4], copies=book[5],
                              genre_id=Genre.query.get(book[6]).id)
+        # pylint: disable=no-member
         db.session.add(book_to_input)
         db.session.commit()
+
 
 if __name__ == '__main__':
     populate_genre()

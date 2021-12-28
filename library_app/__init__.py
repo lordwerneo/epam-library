@@ -5,6 +5,7 @@ Define all the needed variables for the application.
 Register all API resources.
 Register all the blueprints.
 """
+# pylint: disable=cyclic-import
 from flask import Flask, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -21,6 +22,7 @@ api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 
 # import views
+# pylint: disable=cyclic-import
 # pylint: disable=wrong-import-position
 from .views import index, genres, books
 
@@ -30,6 +32,7 @@ app.register_blueprint(genres, url_prefix='/genres')
 app.register_blueprint(books, url_prefix='/books')
 
 # import api
+# pylint: disable=cyclic-import
 # pylint: disable=wrong-import-position
 from .rest import Index, GenresList, GenresSolo, BooksGenreList, BooksList, \
     BooksSolo
@@ -46,6 +49,8 @@ app.register_blueprint(api_bp, url_prefix='/api')
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 
-# pylint: disable=wrong-import-position
+
 # import models
+# pylint: disable=cyclic-import
+# pylint: disable=wrong-import-position
 from .models import Genre, Book

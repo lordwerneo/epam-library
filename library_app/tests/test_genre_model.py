@@ -1,6 +1,7 @@
 """
 This module defines the test cases for genre model
 """
+# pylint: disable=cyclic-import
 import unittest
 from library_app import app, db
 from library_app.models import Genre

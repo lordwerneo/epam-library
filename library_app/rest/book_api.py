@@ -1,6 +1,7 @@
 """
 This module contains REST operations to work with books.
 """
+# pylint: disable=cyclic-import
 from flask_restful import Resource, reqparse
 from library_app.service import book_service
 
@@ -18,6 +19,7 @@ book_args.add_argument('copies', type=int, help='Copies required',
 book_args.add_argument('genre', type=str, help='Genre required', required=True)
 
 
+# pylint: disable=too-many-boolean-expressions
 def input_validator(args):
     """
     Method to check input arguments to suit data in books table.
@@ -73,7 +75,7 @@ class BooksList(Resource):
         if books == 'ISBN exists':
             return {'Message': f'Book {args["isbn"]} already exists',
                     'link': f'/api/book/{args["isbn"]}'}, 405
-        elif books == 'No genre':
+        if books == 'No genre':
             return {'Message': f'Genre {args["genre"]} not found'}
         return {'book': args, 'link': f'/api/book/{args["isbn"]}'}, 201
 

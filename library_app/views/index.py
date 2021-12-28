@@ -1,6 +1,7 @@
 """
 This module represents the logic on / route.
 """
+# pylint: disable=cyclic-import
 from flask import Blueprint, render_template
 
 index = Blueprint('index', __name__)

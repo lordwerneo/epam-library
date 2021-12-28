@@ -1,6 +1,7 @@
 """
 This module contains rest operation for /api/index get method
 """
+# pylint: disable=cyclic-import
 from flask_restful import Resource
 
 resources = [
@@ -36,4 +37,4 @@ class Index(Resource):
         Called when app at /api/index receive GET request
         :return: json of all available resource and methods
         """
-        return {'resources': [resource for resource in resources]}
+        return {'resources': resources}

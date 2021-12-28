@@ -1,6 +1,7 @@
 """
 This module defines test cases for genre views
 """
+# pylint: disable=cyclic-import
 import unittest
 from library_app import app
 from library_app.models import populate_db
@@ -89,5 +90,6 @@ class GenresTest(Base):
         self.assertEqual(statuscode, 200)
 
 
+# pylint: disable=duplicate-code
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(verbosity=2)
