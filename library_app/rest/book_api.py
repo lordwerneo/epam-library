@@ -93,7 +93,7 @@ class BooksSolo(Resource):
             return {'Message': f'Book {args["isbn"]} already exists',
                     'link': f'/api/book/{args["isbn"]}'}, 405
         if book == 'Updated':
-            return {'Message': f'Book{args["isbn"]} updated',
+            return {'Message': f'Book {args["isbn"]} updated',
                     'book': args,
                     'link': f'/api/book/{args["isbn"]}'}, 200
         return {'book': args, 'link': f'/api/book/{args["isbn"]}'}, 201
