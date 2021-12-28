@@ -50,10 +50,10 @@ def add_book():
     form.genre.choices = choices
     if form.validate_on_submit():
         service = book_service.post_book
-        book = service(isbn=form.isbn.data, title=form.title.data,
-                       author=form.author.data, year=form.year.data,
-                       publisher=form.publisher.data, copies=form.copies.data,
-                       genre=Genre.query.get(form.genre.data).name)
+        service(isbn=form.isbn.data, title=form.title.data,
+                author=form.author.data, year=form.year.data,
+                publisher=form.publisher.data, copies=form.copies.data,
+                genre=Genre.query.get(form.genre.data).name)
         flash(f'Book "{form.title.data}" successfully added.', 'success')
         return redirect(url_for('books.books_page'))
     title = 'Add Book'
