@@ -1,3 +1,6 @@
+"""
+This module contains REST operations to work with books.
+"""
 from flask_restful import Resource, reqparse
 from library_app.service import book_service
 
@@ -16,6 +19,11 @@ book_args.add_argument('genre', type=str, help='Genre required', required=True)
 
 
 def input_validator(args):
+    """
+    Method to check input arguments to suit data in books table.
+    :param args: arguments to check
+    :return: False if checked successfully, else True
+    """
     if args['isbn'] == '' or args['title'] == '' or args['author'] == '' \
             or args['year'] < 1900 or args['year'] > 2022 or \
             args['publisher'] == '' or args['copies'] < 1 or \
@@ -31,8 +39,16 @@ def input_validator(args):
 
 
 class BooksList(Resource):
+    """
+    Class for BookList API Resource available at /api/books
+    """
     @staticmethod
     def get():
+        """
+        Called when GET request is received
+        :return: json of all books if success or error message if no books in
+        books table
+        """
         books = book_service.get_all_books()
         if books == 'Error':
             return {'Message': 'No books in DB'}, 200
@@ -40,6 +56,11 @@ class BooksList(Resource):
 
     @staticmethod
     def post():
+        """
+        Called when POST request is received
+        :return: json with information and link of created book if success or
+        error
+        """
         args = book_args.parse_args()
         if input_validator(args):
             return {'Message': 'Wrong data input'}, 400
@@ -58,8 +79,18 @@ class BooksList(Resource):
 
 
 class BooksGenreList(Resource):
+    """
+    Class for BooksGenreList API Resource available
+    at /api/books/<string:genre>'
+    """
     @staticmethod
     def get(genre):
+        """
+        Called when get request is received
+        :param genre: genre of books to look for
+        :return: json of all books in a certain genre if success or error
+        message
+        """
         books = book_service.get_genre_books(genre)
         if books == 'Error':
             return {'Message': f'No books in {genre}'}, 404
@@ -69,8 +100,14 @@ class BooksGenreList(Resource):
 
 
 class BooksSolo(Resource):
+    """Class for BooksSolo API Resource available at /api/book/<string:isbn>"""
     @staticmethod
     def get(isbn):
+        """
+        Called when get request is received
+        :param isbn: unique isbn of a book
+        :return: json with information about book if success or error message
+        """
         book = book_service.get_book_by_isbn(isbn)
         if book == 'Error':
             return {'Message': 'No such book'}, 404
@@ -78,6 +115,13 @@ class BooksSolo(Resource):
 
     @staticmethod
     def put(isbn):
+        """
+        Called when put request is received.
+        :param isbn: unique isbn of a book
+        :return: json with information about created book if no such book in
+        table and success, json with information about updated book if book
+        in table and success, or error message
+        """
         args = book_args.parse_args()
         if input_validator(args):
             return {'Message': 'Wrong data input'}, 400
@@ -100,6 +144,12 @@ class BooksSolo(Resource):
 
     @staticmethod
     def delete(isbn):
+        """
+        Called when DELETE request is received
+        :param isbn: unique isbn of a book
+        :return: json with success message if success, or error message if no
+        book in table
+        """
         book = book_service.delete_book(isbn)
         if book == 'Error':
             return {'Message': 'No such book'}, 404

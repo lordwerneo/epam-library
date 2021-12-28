@@ -1,3 +1,6 @@
+"""
+This module contains rest operation for /api/index get method
+"""
 from flask_restful import Resource
 
 resources = [
@@ -23,7 +26,14 @@ resources = [
 
 
 class Index(Resource):
+    """
+    Class for Index API Resource available at /api/index
+    """
     # noinspection PyMethodMayBeStatic
     # pylint: disable=no-self-use
     def get(self):
+        """
+        Called when app at /api/index receive GET request
+        :return: json of all available resource and methods
+        """
         return {'resources': [resource for resource in resources]}

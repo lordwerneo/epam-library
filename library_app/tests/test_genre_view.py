@@ -3,8 +3,8 @@ This module defines test cases for genre views
 """
 import unittest
 from library_app import app
-from .test_base import Base
 from library_app.models import populate_db
+from .test_base import Base
 
 
 class GenresTest(Base):

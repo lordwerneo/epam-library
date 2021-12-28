@@ -2,10 +2,9 @@
 This module defines test cases for book model
 """
 import unittest
-from .test_base import Base
 from library_app import db
-from library_app.models import Genre, Book
-from library_app.models import populate_db
+from library_app.models import Genre, Book, populate_db
+from .test_base import Base
 
 
 class BookModelCase(Base):

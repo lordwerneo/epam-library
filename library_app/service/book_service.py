@@ -1,6 +1,8 @@
-from library_app import db
+"""
+This module contains CRUD operations to work with 'books' table.
+"""
 import re
-
+from library_app import db
 from ..models import Genre, Book
 
 
@@ -51,6 +53,10 @@ def isbn_checker(isbn):
 
 
 def get_all_books():
+    """
+    Select all records from books table.
+    :return: List of dicts of books
+    """
     books = Book.query.all()
     if books:
         return [book.to_dict() for book in books]
@@ -58,6 +64,11 @@ def get_all_books():
 
 
 def get_genre_books(genre):
+    """
+    Select all books of genre from books table.
+    :param genre: genre of the books to return
+    :return: List of dicts of books of genre
+    """
     genre = Genre.query.filter_by(name=genre).first()
     if not genre:
         return 'No genre'
@@ -68,6 +79,14 @@ def get_genre_books(genre):
 
 
 def get_filtered_books(year_start, year_end, genre):
+    """
+    Select all books from books table filtered by year from, year to, and
+    genre.
+    :param year_start: year to filter from
+    :param year_end: year to filter to
+    :param genre: genre to filter by
+    :return: list of dicts of books with applied filter
+    """
     books = Book.query
     if year_start:
         books = books.filter(Book.year >= int(year_start))
@@ -80,6 +99,17 @@ def get_filtered_books(year_start, year_end, genre):
 
 
 def post_book(isbn, title, author, year, publisher, copies, genre):
+    """
+    Add new book to table
+    :param isbn: unique isbn of the book
+    :param title: title of the book
+    :param author: author of the book
+    :param year: year published
+    :param publisher: publisher of the book
+    :param copies: copies of the book available
+    :param genre: genre of the book
+    :return: None if success, else error message
+    """
     genre_id = Genre.query.filter_by(name=genre).first()
     book = Book.query.filter_by(isbn=isbn).first()
     if genre_id:
@@ -95,6 +125,18 @@ def post_book(isbn, title, author, year, publisher, copies, genre):
 
 
 def put_book(cur_isbn, isbn, title, author, year, publisher, copies, genre):
+    """
+    Update an existing book or create a new one.
+    :param cur_isbn: unique isbn of the book to update
+    :param isbn: unique isbn of the book
+    :param title: title of the book
+    :param author: author of the book
+    :param year: year published
+    :param publisher: publisher of the book
+    :param copies: copies of the book available
+    :param genre: genre of the book
+    :return: None if success, else error message
+    """
     genre_id = Genre.query.filter_by(name=genre).first()
     if genre_id:
         book = Book.query.filter_by(isbn=cur_isbn).first()
@@ -120,6 +162,10 @@ def put_book(cur_isbn, isbn, title, author, year, publisher, copies, genre):
 
 
 def delete_book(isbn):
+    """
+    Delete an existing book.
+    :param isbn: unique identifier of the book
+    """
     book = Book.query.filter_by(isbn=isbn).first()
     if not book:
         return 'Error'
@@ -128,6 +174,11 @@ def delete_book(isbn):
 
 
 def get_book_by_isbn(isbn):
+    """
+    Return information about a book, isbn of the books provided in request.
+    :param isbn: unique identifier of the book
+    :return: Information about book in form of dict
+    """
     book = Book.query.filter_by(isbn=isbn).first()
     if book:
         return book.to_dict()

@@ -2,8 +2,8 @@
 This module defines the Base test class
 """
 import unittest
-from library_app import app, db
 from config import TestConfig
+from library_app import app, db
 
 
 class Base(unittest.TestCase):

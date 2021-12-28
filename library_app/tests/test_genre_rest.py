@@ -2,10 +2,12 @@
 This module defines test cases for genre rest API
 """
 import unittest
-from library_app import app
-from .test_base import Base
-from library_app.models import populate_db, Genre
 import json
+from library_app import app
+from library_app.models import populate_db, Genre
+from .test_base import Base
+
+
 
 
 class GenresAPITest(Base):

@@ -2,9 +2,9 @@
 This module defines the test cases for genre model
 """
 import unittest
-from .test_base import Base
 from library_app import app, db
 from library_app.models import Genre
+from .test_base import Base
 
 
 class GenreModelCase(Base):

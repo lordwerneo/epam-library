@@ -2,10 +2,10 @@
 This module defines test cases for book rest API
 """
 import unittest
-from library_app import app
-from .test_base import Base
-from library_app.models import populate_db, Book
 import json
+from library_app import app
+from library_app.models import populate_db, Book
+from .test_base import Base
 
 
 class BooksAPItest(Base):
