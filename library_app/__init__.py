@@ -5,7 +5,9 @@ Define all the needed variables for the application.
 Register all API resources.
 Register all the blueprints.
 """
-# pylint: disable=cyclic-import
+# pylint: disable=cyclic-impor
+import logging
+from logging.handlers import RotatingFileHandler
 from flask import Flask, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -20,6 +22,19 @@ migrate = Migrate(app, db, directory=MIGRATION_DIR)
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
+
+# file handler for Logging
+if not app.debug:
+    file_handler = RotatingFileHandler('logs.txt', maxBytes=102400,
+                                       backupCount=100)
+    file_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'))
+    file_handler.setLevel(logging.DEBUG)
+    app.logger.addHandler(file_handler)
+
+    app.logger.setLevel(logging.DEBUG)
+    app.logger.info('App startup')
 
 # import views
 # pylint: disable=cyclic-import
