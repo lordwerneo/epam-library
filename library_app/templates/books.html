@@ -5,6 +5,7 @@
                 <a href="{{ url_for('books.add_book') }} " class="button">Add Book</a>
             </div>
         </div>
+        {% if books_list %}
         <div>
             <form action="" method="POST" class="inline-form">
                 <!--Add CSRF token-->
@@ -27,6 +28,7 @@
             </form>
         </div>
         </br>
+        {% endif %}
         {% if books_list %}
             <table>
                 <tr>
@@ -48,7 +50,7 @@
                     <td>{{ book.year }}</td>
                     <td>{{ book.publisher }}</td>
                     <td>{{ book.copies }}</td>
-                    <td>{{ book.genre | title }}</td>
+                    <td>{{ book.genre }}</td>
                     <td><a href="{{ url_for('books.update_book', isbn=book.isbn) }}"><i style="color: darkgreen" class="fas fa-edit"></i></a></td>
                     <td><a href="{{ url_for('books.delete_book', isbn=book.isbn) }}"><i style="color: red" class="fas fa-trash"></i></a></td>
                 </tr>

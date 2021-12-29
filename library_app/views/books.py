@@ -33,6 +33,8 @@ def books_page():
                                title=title, form=form)
     service = book_service.get_all_books
     books_list = service()
+    if books_list == 'Error':
+        books_list = None
     title = 'Books'
     return render_template('books.html', books_list=books_list, title=title,
                            form=form)

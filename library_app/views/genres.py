@@ -5,7 +5,7 @@ This module represents the logic on /genres route.
 from flask import Blueprint, render_template, url_for, flash, redirect
 from library_app.forms import AddGenreForm, UpdateGenreForm
 from library_app.service import genre_service
-from library_app.models import Genre
+from library_app.models import Genre, Book, populate_db
 
 genres = Blueprint('genres', __name__)
 
@@ -79,4 +79,21 @@ def delete_genre(genre_name):
         flash(f'Genre "{genre_name}" does not exist.', 'fail')
         return redirect(url_for('genres.genres_page'))
     flash(f'Genre "{genre_name}" deleted.', 'warning')
+    return redirect(url_for('genres.genres_page'))
+
+
+# pylint: disable=no-member
+@genres.route('/populate_db')
+def populate():
+    """
+    Populate both tables in database
+    """
+    genres_status = Genre.query.all()
+    books_status = Book.query.all()
+    if not genres_status and not books_status:
+        populate_db.populate_genre()
+        populate_db.populate_book()
+        flash(f'DB populated successfully', 'success')
+        return redirect(url_for('genres.genres_page'))
+    flash(f'DB population failed', 'warning')
     return redirect(url_for('genres.genres_page'))

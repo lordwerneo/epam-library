@@ -2,6 +2,9 @@
 {% block content %}
         <div class="controls">
             <div class="form_buttons">
+                {% if not genres_list %}
+                    <a href="{{ url_for('genres.populate') }}" class="button">Populate DB</a>
+                {% endif %}
                 <a href="{{ url_for('genres.add_genre') }}" class="button">Add Genre</a>
             </div>
         </div>
