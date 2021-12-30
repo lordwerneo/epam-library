@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Book</title>
+    <!--CSS RESET-->
+    <link rel="stylesheet" href="css/css-reset.css">
+    <!--Custom CSS styles-->
+    <link rel="stylesheet" href="css/styles.css">
+    <!--Page description-->
+    <meta name="description" content="Edit book">
+    <!--Imported google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;700&display=swap" rel="stylesheet">
+    <!--Imported icons from fontawesome-->
+    <script src="https://kit.fontawesome.com/86fff67982.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="nav_bar">
+            <a href="index.html" class="nav_bar_button"><i class="fas fa-home"></i></a>
+            <h1>Edit book</h1>
+            <div class="dropdown_menu">
+                <i class="fas fa-bars nav_bar_button"></i>
+                <div class="dropdown_content">
+                    <a href="genres.html">Genres</a>
+                    <a href="books.html">Books</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="form_controls">
+            <div class="form_buttons">
+                <a href="books.html" class="button">Cancel</a>
+<!--                <a href="borrow_book.html" class="button">Borrow</a>-->
+            </div>
+        </div>
+        <div class="center_form">
+            <form action="" class="input">
+                <label for="ISBN">ISBN:</label>
+                <input type="text" id="ISBN" name="ISBN" placeholder="0123456789">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Green beasts and where to find them">
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" placeholder="M. Zelinsky">
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" name="genre" placeholder="Political">
+                <label for="year">Year:</label>
+                <input type="text" id="year" name="year" placeholder="2019">
+                <label for="publisher">Publisher:</label>
+                <input type="text" id="publisher" name="publisher" placeholder="Democracy">
+                <label for="copies">Copies:</label>
+                <input type="text" id="copies" name="copies" placeholder="1">
+                <input type="submit" value="Save Changes">
+            </form>
+        </div>
+    </main>
+    <footer>
+        <a href="https://github.com/lordwerneo/epam-library"><i class="fab fa-github-square icon"></i></a>
+    </footer>
+</div>
+</body>
+</html>
