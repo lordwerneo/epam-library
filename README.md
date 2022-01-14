@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/lordwerneo/epam-library/badge.svg)](https://coveralls.io/github/lordwerneo/epam-library)
+
 # **Library App**
 ___
 

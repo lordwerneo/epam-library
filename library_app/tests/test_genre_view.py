@@ -11,6 +11,7 @@ class GenresTest(Base):
     """
     Class for book views test cases
     """
+
     def test_genres(self):
         """
         Test /genres views with and without entries in DB
@@ -36,9 +37,9 @@ class GenresTest(Base):
         self.assertEqual(statuscode, 200)
         tester = app.test_client()
         response = tester.post('/genres/add_genre', data={
-                'name': 'test',
-                'description': 'test description'
-            }, follow_redirects=True)
+            'name': 'test',
+            'description': 'test description'
+        }, follow_redirects=True)
         statuscode = response.status_code
         self.assertEqual(statuscode, 200)
 
@@ -85,5 +86,18 @@ class GenresTest(Base):
         tester = app.test_client()
         response = tester.get('/genres/delete_genre/fantasy',
                               follow_redirects=True)
+        statuscode = response.status_code
+        self.assertEqual(statuscode, 200)
+
+    # pylint: disable=no-member
+    def test_populate(self):
+        """
+        Test populate /genres/populate_db
+        """
+        tester = app.test_client()
+        response = tester.get('/genres/populate_db', follow_redirects=True)
+        statuscode = response.status_code
+        self.assertEqual(statuscode, 200)
+        response = tester.get('/genres/populate_db', follow_redirects=True)
         statuscode = response.status_code
         self.assertEqual(statuscode, 200)
