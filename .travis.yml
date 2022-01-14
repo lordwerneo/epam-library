@@ -7,7 +7,7 @@ install:
 
 script:
   - pytest
-  - pytest --pylint
+  - pylint
   - coverage run -m unittest discover
   - coverage report
 
