@@ -26,8 +26,8 @@ api = Api(api_bp)
 
 # file handler for Logging
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
-log_path = 'library.log'
-file_handler = RotatingFileHandler(log_path, maxBytes=102400,
+LOG_PATH = 'library.log'
+file_handler = RotatingFileHandler(LOG_PATH, maxBytes=102400,
                                    backupCount=10)
 file_handler.setFormatter(formatter)
 file_handler.setLevel(logging.DEBUG)
@@ -42,6 +42,7 @@ werkzeug_logger.addHandler(file_handler)
 werkzeug_logger.addHandler(console_handler)
 werkzeug_logger.setLevel(logging.DEBUG)
 
+# pylint: disable=no-member
 logger = app.logger
 logger.handlers.clear()
 logger.addHandler(file_handler)

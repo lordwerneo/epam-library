@@ -1,3 +1,4 @@
+"""Run Flask app module"""
 from library_app import app
 
 

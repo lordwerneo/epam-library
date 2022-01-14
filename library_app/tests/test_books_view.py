@@ -2,7 +2,6 @@
 This module defines test cases for book views
 """
 # pylint: disable=cyclic-import
-import unittest
 from library_app import app
 from library_app.models import populate_db
 from .test_base import Base
@@ -111,8 +110,3 @@ class BookTest(Base):
                               follow_redirects=True)
         statuscode = response.status_code
         self.assertEqual(statuscode, 200)
-
-
-# pylint: disable=duplicate-code
-if __name__ == '__main__':
-    unittest.main(verbosity=2)

@@ -93,7 +93,7 @@ def populate():
     if not genres_status and not books_status:
         populate_db.populate_genre()
         populate_db.populate_book()
-        flash(f'DB populated successfully', 'success')
+        flash('DB populated successfully', 'success')
         return redirect(url_for('genres.genres_page'))
-    flash(f'DB population failed', 'warning')
+    flash('DB population failed', 'warning')
     return redirect(url_for('genres.genres_page'))
